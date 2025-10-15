@@ -1,0 +1,30 @@
+# #  for i in range (1, 10):
+# #   print (f'perulangan ke {i})'):
+
+# #  simpan = {1, dapupu', 4,00, true}:
+# #  for i in simpo
+# #      print(i):
+# # 
+# # for i in "2131241":
+# #     print(i):
+
+
+# #  for i in range (5):
+# #      for j in range (0, i+1:):
+# #          #  print(#, end="")
+# #      print("") 
+# while true:
+#     print ("ulang")
+
+#     jawab = 'ya'
+#     hitung = 0 
+#     while(jawab =='ya'):
+#         hitung += 1 
+#         jawab = input("ulang lagi")
+#     print (f"total perulangan: (hitung)")
+
+# angka = {2, 5, 8, 12, 15, 7, 20}
+# print ("mencari angka pertama yang lebih besar dari 18...")
+# for n in angka:
+#     print(f"sekarang memeriksa angka: {n}")
+# if n > 10:   
