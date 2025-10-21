@@ -1,0 +1,144 @@
+import os
+
+akun = {
+    "Kirana Cinta Mentari": {"password": "admin123", "role": "admin"}
+}
+
+stok = {}
+
+while True:
+    os.system("cls" if os.name == "nt" else "clear")
+    print("=== TOKO BONEKA ===")
+    print("1. Masuk")
+    print("2. Daftar")
+    print("0. Keluar")
+    menu_awal = input("Pilih: ")
+
+    if menu_awal == "2":
+        os.system("cls" if os.name == "nt" else "clear")
+        print("=== DAFTAR AKUN ===")
+        user_baru = input("Username baru: ")
+        if user_baru in akun:
+            print("Username sudah terdaftar!")
+        else:
+            pass_baru = input("Password baru: ")
+            akun[user_baru] = {"password": pass_baru, "role": "user"}
+            print("Akun berhasil dibuat.")
+        input("Enter untuk lanjut...")
+
+    elif menu_awal == "1":
+        os.system("cls" if os.name == "nt" else "clear")
+        print("=== LOGIN ===")
+        u = input("Username: ")
+        p = input("Password: ")
+
+        if u not in akun or akun[u]["password"] != p:
+            print("Username atau password salah.")
+            input("Enter untuk lanjut...")
+        else:
+            role = akun[u]["role"]
+
+
+            if role == "admin":
+                while True:
+                    os.system("cls" if os.name == "nt" else "clear")
+                    print("=== MENU ADMIN ===")
+                    print("1. Tambah data")
+                    print("2. Lihat data")
+                    print("3. Edit data")
+                    print("4. Hapus data")
+                    print("0. Keluar")
+                    pilih_admin = input("Pilih: ")
+
+                    if pilih_admin == "1":
+                        os.system("cls" if os.name == "nt" else "clear")
+                        nama = input("Nama item: ")
+                        if nama in stok:
+                            print("Item sudah ada!")
+                        else:
+                            harga = input("Harga: ")
+                            jumlah = input("Jumlah: ")
+                            stok[nama] = {"harga": harga, "jumlah": jumlah}
+                            print("Data ditambah.")
+                        input("Enter...")
+
+                    elif pilih_admin == "2":
+                        os.system("cls" if os.name == "nt" else "clear")
+                        if not stok:
+                            print("Belum ada data.")
+                        else:
+                            for i, (nama, data) in enumerate(stok.items(), 1):
+                                print(f"{i}. {nama} - Harga: {data['harga']} - Jumlah: {data['jumlah']}")
+                        input("Enter...")
+
+                    elif pilih_admin == "3":
+                        os.system("cls" if os.name == "nt" else "clear")
+                        if not stok:
+                            print("Data kosong.")
+                        else:
+                            for i, nama in enumerate(stok.keys(), 1):
+                                print(f"{i}. {nama}")
+                            pilih = input("Masukkan nama item yang ingin diedit: ")
+                            if pilih in stok:
+                                nama_baru = input("Nama baru: ")
+                                harga_baru = input("Harga baru: ")
+                                jumlah_baru = input("Jumlah baru: ")
+                                stok.pop(pilih)
+                                stok[nama_baru] = {"harga": harga_baru, "jumlah": jumlah_baru}
+                                print("Data diperbarui.")
+                            else:
+                                print("Item tidak ditemukan.")
+                        input("Enter...")
+
+                    elif pilih_admin == "4":
+                        os.system("cls" if os.name == "nt" else "clear")
+                        if not stok:
+                            print("Data kosong.")
+                        else:
+                            for i, nama in enumerate(stok.keys(), 1):
+                                print(f"{i}. {nama}")
+                            hapus = input("Masukkan nama item yang ingin dihapus: ")
+                            if hapus in stok:
+                                stok.pop(hapus)
+                                print("Data dihapus.")
+                            else:
+                                print("Item tidak ditemukan.")
+                        input("Enter...")
+
+                    elif pilih_admin == "0":
+                        break
+
+                    else:
+                        print("Pilihan tidak valid.")
+                        input("Enter...")
+
+            else:
+                while True:
+                    os.system("cls" if os.name == "nt" else "clear")
+                    print("=== MENU PENGGUNA ===")
+                    print("1. Lihat data")
+                    print("0. Keluar")
+                    pilih_user = input("Pilih: ")
+
+                    if pilih_user == "1":
+                        os.system("cls" if os.name == "nt" else "clear")
+                        if not stok:
+                            print("Belum ada data.")
+                        else:
+                            for i, (nama, data) in enumerate(stok.items(), 1):
+                                print(f"{i}. {nama} - Harga: {data['harga']} - Jumlah: {data['jumlah']}")
+                        input("Enter...")
+
+                    elif pilih_user == "0":
+                        break
+
+                    else:
+                        print("Pilihan tidak ada.")
+                        input("Enter...")
+
+    elif menu_awal == "0":
+        break
+
+    else:
+        print("Pilihan tidak ada.")
+        input("Enter...")
