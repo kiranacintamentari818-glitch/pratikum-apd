@@ -1,0 +1,131 @@
+import os
+
+akun = {
+    "Kirana Cinta Mentari": {"password": "admin123", "role": "admin"},
+    "Bunga": {"password": "user123", "role": "user"}
+}
+stok = {
+    "Boneka Teddy": 10,
+    "Boneka Doraemon": 8,
+    "Boneka Hello Kitty": 5
+}
+keranjang = {}  
+
+def tampilkan_stok():
+    print("\n=== DAFTAR STOK BONEKA ===")
+    for nama, jumlah in stok.items():
+        print(f"- {nama}: {jumlah} pcs")
+
+def tampilkan_menu():
+    print("\n1. Lihat Stok")
+    print("2. Tambah Stok (Admin)")
+    print("3. Beli Boneka (User)")
+    print("4. Lihat Keranjang")
+    print("5. Logout")
+
+
+def tambah_stok(nama_boneka, jumlah):
+    if nama_boneka in stok:
+        stok[nama_boneka] += jumlah
+    else:
+        stok[nama_boneka] = jumlah
+    print(f"{nama_boneka} berhasil ditambah! Jumlah sekarang: {stok[nama_boneka]} pcs")
+
+def beli_boneka(nama_boneka, jumlah):
+    if nama_boneka in stok and stok[nama_boneka] >= jumlah:
+        stok[nama_boneka] -= jumlah
+        keranjang[nama_boneka] = keranjang.get(nama_boneka, 0) + jumlah
+        print(f"Berhasil membeli {jumlah} {nama_boneka}")
+    else:
+        print("Stok tidak cukup atau boneka tidak ditemukan!")
+
+
+def login():
+    global username
+    os.system("cls" if os.name == "nt" else "clear")
+    print("=== LOGIN ===")
+    username = input("Masukkan nama pengguna: ")
+    password = input("Masukkan password: ")
+
+    if username in akun and akun[username]["password"] == password:
+        print(f"Selamat datang, {username}!")
+        menu_utama()
+    else:
+        print("Login gagal! Silakan coba lagi.")
+        input("Tekan Enter untuk kembali...")
+
+def daftar():
+    os.system("cls" if os.name == "nt" else "clear")
+    print("=== DAFTAR AKUN BARU ===")
+    nama = input("Masukkan nama pengguna baru: ")
+    if nama in akun:
+        print("Nama sudah digunakan!")
+        return
+    pw = input("Masukkan password: ")
+    akun[nama] = {"password": pw, "role": "user"}
+    print("Akun berhasil dibuat! Silakan login.")
+
+
+
+def menu_utama():
+    os.system("cls" if os.name == "nt" else "clear")
+    print(f"=== MENU UTAMA ({username}) ===")
+    tampilkan_menu()
+
+    
+    pilihan = input("Pilih menu: ")
+    try:
+        if pilihan == "1":
+            tampilkan_stok()
+        elif pilihan == "2":
+            if akun[username]["role"] == "admin":
+                nama = input("Masukkan nama boneka: ")
+                jumlah = int(input("Masukkan jumlah tambahan: "))
+                tambah_stok(nama, jumlah)
+            else:
+                print("Akses ditolak! Hanya admin yang bisa menambah stok.")
+        elif pilihan == "3":
+            if akun[username]["role"] == "user":
+                nama = input("Masukkan nama boneka: ")
+                jumlah = int(input("Masukkan jumlah yang ingin dibeli: "))
+                beli_boneka(nama, jumlah)
+            else:
+                print("Admin tidak bisa membeli boneka.")
+        elif pilihan == "4":
+            print("\n=== KERANJANG ANDA ===")
+            if keranjang:
+                for n, j in keranjang.items():
+                    print(f"- {n}: {j} pcs")
+            else:
+                print("Keranjang kosong.")
+        elif pilihan == "5":
+            print("Logout berhasil!")
+            input("Tekan Enter untuk kembali ke menu awal...")
+            return  
+        else:
+            print("Pilihan tidak valid!")
+    except ValueError:
+        print("Input harus berupa angka!")
+
+    input("\nTekan Enter untuk melanjutkan...")
+    menu_utama()  
+
+
+while True:
+    os.system("cls" if os.name == "nt" else "clear")
+    print("=== TOKO BONEKA ===")
+    print("1. Masuk")
+    print("2. Daftar")
+    print("0. Keluar")
+    pilihan_awal = input("Pilih: ")
+
+    if pilihan_awal == "1":
+        login()
+    elif pilihan_awal == "2":
+        daftar()
+    elif pilihan_awal == "0":
+        print("Terima kasih telah berkunjung!")
+        break
+    else:
+        print("Pilihan tidak valid!")
+        input("Tekan Enter untuk lanjut...")
